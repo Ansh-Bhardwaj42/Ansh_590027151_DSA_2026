@@ -1,4 +1,4 @@
-Q1) Write a program to check a number is a prime or not.
+/*Q1) Write a program to check a number is a prime or not.*/
 #include <stdio.h>
 int main(){
     int n,i,c = 1;
@@ -24,7 +24,7 @@ int main(){
 
 
 
-Q2) Write a program to reverse a 3-digit number.
+/*Q2) Write a program to reverse a 3-digit number.*/
 #include <stdio.h>
 int main(){
     int n,rev = 0, dig;
@@ -43,7 +43,7 @@ int main(){
 
 
 
-Q3) Write a program to find the factorial of a number (use both iterative and recursion method)
+/*Q3) Write a program to find the factorial of a number (use both iterative and recursion method)*/
 
 #using iterative method.
 #include <stdio.h>
@@ -83,7 +83,7 @@ int main(){
 
 
 
-Q4) Write a program using temp variable to swap two numbers.
+/*Q4) Write a program using temp variable to swap two numbers.*/
 #include <stdio.h>
 int main(){
     int a, b, temp;
@@ -102,7 +102,7 @@ int main(){
 }
 
 
-Q5) Write a program to print the fibonacci series up to to n terms.
+/*Q5) Write a program to print the fibonacci series up to to n terms.*/
 #include <stdio.h>
 void fibonacci(int num)
 {
