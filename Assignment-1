@@ -1,0 +1,344 @@
+/*1.Program to dynamically allocate memory for an array,read elements from the user, display them,and free the allocated memory.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int size;
+    printf("Enter number of elements: ");
+    scanf("%d", &size);
+
+    int *arr = malloc(size * sizeof(int));
+
+    printf("Enter %d elements:\n", size);
+    for (int i = 0; i < size; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    printf("Array elements are:\n");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    free(arr);
+    return 0;
+}
+
+
+
+/*2.Program to dynamically allocate memory for N integersand calculate their sum and average.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n, sum = 0;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int *nums = calloc(n, sizeof(int));
+
+    printf("Enter %d numbers:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &nums[i]);
+        sum += nums[i];
+    }
+
+    printf("Sum = %d\n", sum);
+    printf("Average = %.2f\n", (float)sum / n);
+
+    free(nums);
+    return 0;
+}
+
+
+
+
+/*3.Program to find the largest and smallest elementfrom a dynamically allocated array.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int *data = malloc(n * sizeof(int));
+
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++)
+        scanf("%d", &data[i]);
+
+    int max = data[0], min = data[0];
+
+    for (int i = 1; i < n; i++) {
+        if (data[i] > max) max = data[i];
+        if (data[i] < min) min = data[i];
+    }
+
+    printf("Largest element = %d\n", max);
+    printf("Smallest element = %d\n", min);
+
+    free(data);
+    return 0;
+}
+
+
+
+
+/*4.Program to dynamically allocate two matricesand perform matrix addition.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int r, c;
+    printf("Enter number of rows and columns: ");
+    scanf("%d %d", &r, &c);
+
+    int **a = malloc(r * sizeof(int *));
+    int **b = malloc(r * sizeof(int *));
+    int **sum = malloc(r * sizeof(int *));
+
+    for (int i = 0; i < r; i++) {
+        a[i] = malloc(c * sizeof(int));
+        b[i] = malloc(c * sizeof(int));
+        sum[i] = malloc(c * sizeof(int));
+    }
+
+    printf("Enter elements of first matrix:\n");
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            scanf("%d", &a[i][j]);
+
+    printf("Enter elements of second matrix:\n");
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            scanf("%d", &b[i][j]);
+
+    printf("Sum of matrices:\n");
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            sum[i][j] = a[i][j] + b[i][j];
+            printf("%d ", sum[i][j]);
+        }
+        printf("\n");
+    }
+
+    for (int i = 0; i < r; i++) {
+        free(a[i]); free(b[i]); free(sum[i]);
+    }
+    free(a); free(b); free(sum);
+
+    return 0;
+}
+
+
+
+
+/*5.Program to store and display student detailsusing structure and dynamic memory allocation.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Student {
+    int roll;
+    char name[25];
+    float marks;
+};
+
+int main() {
+    int n;
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    struct Student *s = malloc(n * sizeof(struct Student));
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter roll number, name and marks of student %d:\n", i + 1);
+        scanf("%d %s %f", &s[i].roll, s[i].name, &s[i].marks);
+    }
+
+    printf("Student Details:\n");
+    for (int i = 0; i < n; i++)
+        printf("%d %s %.2f\n", s[i].roll, s[i].name, s[i].marks);
+
+    free(s);
+    return 0;
+}
+
+
+
+
+/*6.Program to find the employee with the highest salaryusing array of structures.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Employee {
+    int id;
+    float salary;
+};
+
+int main() {
+    int n;
+    printf("Enter number of employees: ");
+    scanf("%d", &n);
+
+    struct Employee *e = malloc(n * sizeof(struct Employee));
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter employee ID and salary:\n");
+        scanf("%d %f", &e[i].id, &e[i].salary);
+    }
+
+    int max = 0;
+    for (int i = 1; i < n; i++)
+        if (e[i].salary > e[max].salary)
+            max = i;
+
+    printf("Employee with highest salary ID = %d\n", e[max].id);
+
+    free(e);
+    return 0;
+}
+
+
+
+
+/*7.Menu-driven program using dynamic memory allocationto add, display, and delete records.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int *arr = NULL, choice, count = 0;
+
+    while (1) {
+        printf("\n1.Add  2.Display  3.Delete  4.Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 1) {
+            count++;
+            arr = realloc(arr, count * sizeof(int));
+            printf("Enter value: ");
+            scanf("%d", &arr[count - 1]);
+        } 
+        else if (choice == 2) {
+            printf("Records are:\n");
+            for (int i = 0; i < count; i++)
+                printf("%d ", arr[i]);
+        } 
+        else if (choice == 3) {
+            if (count > 0) {
+                count--;
+                arr = realloc(arr, count * sizeof(int));
+                printf("Last record deleted.\n");
+            }
+        } 
+        else {
+            free(arr);
+            break;
+        }
+    }
+    return 0;
+}
+
+
+
+
+/*8.Program to demonstrate memory sharing using union.*/
+
+#include <stdio.h>
+
+union Data {
+    int i;
+    float f;
+    char c;
+};
+
+int main() {
+    union Data d;
+
+    printf("Enter an integer value: ");
+    scanf("%d", &d.i);
+    printf("Integer = %d\n", d.i);
+
+    printf("Enter a float value: ");
+    scanf("%f", &d.f);
+    printf("Float = %.2f\n", d.f);
+
+    printf("Enter a character: ");
+    scanf(" %c", &d.c);
+    printf("Character = %c\n", d.c);
+
+    return 0;
+}
+
+
+
+
+/*9.Program to compare memory allocationbetween structure and union.*/
+
+#include <stdio.h>
+
+struct S {
+    int a;
+    float b;
+    char c;
+};
+
+union U {
+    int a;
+    float b;
+    char c;
+};
+
+int main() {
+    printf("Size of structure = %lu bytes\n", sizeof(struct S));
+    printf("Size of union = %lu bytes\n", sizeof(union U));
+    return 0;
+}
+
+
+
+
+/*10.Program to sort student records based on marksusing dynamic memory allocation.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Student {
+    int roll;
+    float marks;
+};
+
+int main() {
+    int n;
+    printf("Enter number of students: ");
+    scanf("%d", &n);
+
+    struct Student *s = malloc(n * sizeof(struct Student));
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter roll number and marks:\n");
+        scanf("%d %f", &s[i].roll, &s[i].marks);
+    }
+
+    for (int i = 0; i < n; i++)
+        for (int j = i + 1; j < n; j++)
+            if (s[i].marks > s[j].marks) {
+                struct Student temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
+            }
+
+    printf("Sorted student list:\n");
+    for (int i = 0; i < n; i++)
+        printf("%d %.2f\n", s[i].roll, s[i].marks);
+
+    free(s);
+    return 0;
+}
