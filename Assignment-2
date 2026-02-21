@@ -1,0 +1,1639 @@
+/*1.	Write a C program to traverse a singly linked list and count the number of nodes present in the list.*/
+
+//Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+int data;
+struct Node* next;
+};
+
+int main() {
+int n, value, count = 0;
+struct Node *head = NULL, *temp, *newNode;
+
+printf("Enter number of nodes: ");
+scanf("%d", &n);
+
+for(int i = 0; i < n; i++) {
+printf("Enter value: ");
+scanf("%d", &value);
+
+newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->data = value;
+newNode->next = NULL;
+
+if(head == NULL)
+head = newNode;
+else {
+temp = head;
+while(temp->next != NULL)
+temp = temp->next;
+temp->next = newNode;
+}
+}
+
+temp = head;
+printf("Linked List: ");
+while(temp != NULL) {
+printf("%d ", temp->data);
+count++;
+temp = temp->next;
+}
+
+printf("\nTotal nodes = %d", count);
+return 0;
+}
+
+
+
+
+/*2.	Write a C program to implement a singly linked list and search for a given element in the list. If the element is found, display the position of the 
+element in the linked list; otherwise, display element does not exit.*/
+
+//Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+int data;
+struct Node* next;
+};
+
+int main() {
+struct Node *head = NULL, *temp, *newNode;
+int n, value, key, position = 1, found = 0;
+
+printf("Enter number of nodes: ");
+scanf("%d", &n);
+
+for(int i = 0; i < n; i++) {
+newNode = (struct Node*)malloc(sizeof(struct Node));
+scanf("%d", &newNode->data);
+newNode->next = head;
+head = newNode;
+}
+
+printf("Enter element to search: ");
+scanf("%d", &key);
+
+temp = head;
+while(temp != NULL) {
+if(temp->data == key) {
+printf("Element found at position %d", position);
+found = 1;
+break;
+}
+temp = temp->next;
+position++;
+}
+
+if(!found)
+printf("Element does not exist.");
+
+return 0;
+}
+
+
+
+
+/*3.	Write a C program to implement insertion operations in a singly linked list. The program should perform the following operations:*/
+
+
+//-) Insert a new element at the beginning of the linked list:
+
+Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+int data;
+struct Node* next;
+};
+
+void display(struct Node* head) {
+while(head != NULL) {
+printf("%d -> ", head->data);
+head = head->next;
+}
+printf("NULL\n");
+}
+
+int main() {
+struct Node *head = NULL, *temp, *newNode;
+int n, value, newValue;
+
+printf("Enter number of nodes: ");
+scanf("%d", &n);
+
+for(int i = 0; i < n; i++) {
+newNode = (struct Node*)malloc(sizeof(struct Node));
+printf("Enter value: ");
+scanf("%d", &newNode->data);
+newNode->next = NULL;
+
+if(head == NULL)
+head = newNode;
+else {
+temp = head;
+while(temp->next != NULL)
+temp = temp->next;
+temp->next = newNode;
+}
+}
+
+printf("Original List:\n");
+display(head);
+
+printf("Enter value to insert at beginning: ");
+scanf("%d", &newValue);
+
+
+newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->data = newValue;
+newNode->next = head;
+head = newNode;
+
+printf("Updated List:\n");
+display(head);
+
+return 0;
+}
+
+
+//-) Insert a new element at the end of the linked list.
+
+Input: 
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void display(struct Node* head) {
+    while(head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node *head = NULL, *temp, *newNode;
+    int n, newValue;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        printf("Enter value: ");
+        scanf("%d", &newNode->data);
+        newNode->next = NULL;
+
+        if(head == NULL)
+            head = newNode;
+        else {
+            temp = head;
+            while(temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    printf("Original List:\n");
+    display(head);
+
+    printf("Enter value to insert at end: ");
+    scanf("%d", &newValue);
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = newValue;
+    newNode->next = NULL;
+
+    if(head == NULL)
+        head = newNode;
+    else {
+        temp = head;
+        while(temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+
+    printf("Updated List:\n");
+    display(head);
+
+    return 0;
+}
+
+
+//-) Insert a new element after a given node in the linked list.
+
+Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void display(struct Node* head) {
+    while(head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node *head = NULL, *temp, *newNode;
+    int n, key, newValue, found = 0;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        printf("Enter value: ");
+        scanf("%d", &newNode->data);
+        newNode->next = NULL;
+
+        if(head == NULL)
+            head = newNode;
+        else {
+            temp = head;
+            while(temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    printf("Original List:\n");
+    display(head);
+
+    printf("Enter node value after which to insert: ");
+    scanf("%d", &key);
+
+    printf("Enter new value: ");
+    scanf("%d", &newValue);
+
+    temp = head;
+
+    while(temp != NULL) {
+        if(temp->data == key) {
+            newNode = (struct Node*)malloc(sizeof(struct Node));
+            newNode->data = newValue;
+            newNode->next = temp->next;
+            temp->next = newNode;
+            found = 1;
+            break;
+        }
+        temp = temp->next;
+    }
+
+    if(found)
+        printf("Updated List:\n");
+    else
+        printf("Given node not found!\n");
+
+    display(head);
+
+    return 0;
+}
+
+
+
+
+
+/*4.	Write a C program to implement deletion operations on a singly linked list. The program should support deleting an element from:*/
+
+//-) The beginning of the linked list:
+
+Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void display(struct Node* head) {
+    while(head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node *head = NULL, *temp, *newNode;
+    int n;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        printf("Enter value: ");
+        scanf("%d", &newNode->data);
+        newNode->next = NULL;
+
+        if(head == NULL)
+            head = newNode;
+        else {
+            temp = head;
+            while(temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    printf("Original List:\n");
+    display(head);
+
+    if(head == NULL) {
+        printf("List is empty. Nothing to delete.\n");
+    } else {
+      
+
+        temp = head;
+        head = head->next;
+        free(temp);
+        printf("First node deleted.\n");
+    }
+
+    printf("Updated List:\n");
+    display(head);
+
+    return 0;
+}
+
+
+//-) The end of the linked list:
+
+Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+
+};
+
+
+void display(struct Node* head) {
+    while(head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node *head = NULL, *temp, *prev, *newNode;
+    int n;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        printf("Enter value: ");
+        scanf("%d", &newNode->data);
+        newNode->next = NULL;
+
+        if(head == NULL)
+            head = newNode;
+        else {
+            temp = head;
+            while(temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    printf("Original List:\n");
+    display(head);
+
+    if(head == NULL) {
+        printf("List is empty.\n");
+    }
+    else if(head->next == NULL) {
+        free(head);
+        head = NULL;
+        printf("Last node deleted.\n");
+    }
+    else {
+        temp = head;
+        while(temp->next != NULL) {
+            prev = temp;
+            temp = temp->next;
+        }
+        prev->next = NULL;
+        free(temp);
+        printf("Last node deleted.\n");
+    }
+
+ 
+
+   printf("Updated List:\n");
+    display(head);
+
+    return 0;
+}
+
+
+
+//-) After a given node (specified by its value):
+
+Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+
+
+void display(struct Node* head) {
+    while(head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node *head = NULL, *temp, *prev, *newNode;
+    int n, key, found = 0;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        printf("Enter value: ");
+        scanf("%d", &newNode->data);
+        newNode->next = NULL;
+
+        if(head == NULL)
+            head = newNode;
+        else {
+            temp = head;
+            while(temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    printf("Original List:\n");
+    display(head);
+
+    printf("Enter value to delete: ");
+    scanf("%d", &key);
+
+    temp = head;
+    prev = NULL;
+
+    while(temp != NULL && temp->data != key) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if(temp == NULL) {
+        printf("Value not found.\n");
+    }
+    else {
+        if(prev == NULL)
+            head = temp->next;
+        else
+            prev->next = temp->next;
+
+        free(temp);
+        printf("Node deleted successfully.\n");
+    }
+
+    printf("Updated List:\n");
+    display(head);
+
+    return 0;
+}
+
+
+
+
+
+/*5.	Write a C program to reverse the data of the nodes of a singly linked list without changing the links between the nodes.*/
+
+Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void display(struct Node* head) {
+    while(head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+void reverseData(struct Node* head) {
+    int arr[100], i = 0;
+    struct Node* temp = head;
+
+    while(temp != NULL) {
+        arr[i++] = temp->data;
+        temp = temp->next;
+    }
+
+    temp = head;
+    while(temp != NULL) {
+        temp->data = arr[--i];
+        temp = temp->next;
+    }
+}
+
+int main() {
+    struct Node *head = NULL, *temp, *newNode;
+    int n;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        scanf("%d", &newNode->data);
+        newNode->next = NULL;
+
+        if(head == NULL)
+            head = newNode;
+        else {
+
+
+            temp = head;
+            while(temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    printf("Original List:\n");
+    display(head);
+
+    reverseData(head);
+
+    printf("Reversed Data List:\n");
+    display(head);
+
+    return 0;
+}
+
+
+
+
+
+/*6.	Write a C program to implement a Circular Singly Linked List and perform all basic operations on it. The program must support the following operations:
+-) Creation of a Circular Linked List
+-) Insertion of a node (At the beginning and at the end of the list)
+-) Deletion of a node (From the beginning and from the end of the list)
+-) Traversal and display of the circular linked list and counting the number of nodes in the list.*/
+
+//Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Create circular list
+void createList(struct Node** head, int n) {
+    struct Node *newNode, *temp;
+    int value;
+
+    for(int i = 0; i < n; i++) {
+        printf("Enter value: ");
+        scanf("%d", &value);
+
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = value;
+
+        if(*head == NULL) {
+            *head = newNode;
+            newNode->next = *head;
+        } else {
+            temp = *head;
+            while(temp->next != *head)
+                temp = temp->next;
+
+            temp->next = newNode;
+            newNode->next = *head;
+        }
+    }
+}
+
+// Insert at beginning
+void insertBeginning(struct Node** head, int value) {
+    struct Node *newNode, *last;
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+
+
+    if(*head == NULL) {
+        *head = newNode;
+        
+          newNode->next = *head;
+    } else {
+        last = *head;
+        while(last->next != *head)
+            last = last->next;
+
+        newNode->next = *head;
+        last->next = newNode;
+        *head = newNode;
+    }
+}
+
+// Insert at end
+void insertEnd(struct Node** head, int value) {
+    struct Node *newNode, *last;
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+    if(*head == NULL) {
+        *head = newNode;
+        newNode->next = *head;
+    } else {
+        last = *head;
+        while(last->next != *head)
+            last = last->next;
+
+        last->next = newNode;
+        newNode->next = *head;
+    }
+}
+
+// Delete from beginning
+void deleteBeginning(struct Node** head) {
+    struct Node *temp, *last;
+
+    if(*head == NULL) return;
+
+    if((*head)->next == *head) {
+        free(*head);
+        *head = NULL;
+    } else {
+        temp = *head;
+        last = *head;
+
+        while(last->next != *head)
+            last = last->next;
+
+        *head = temp->next;
+
+
+        last->next = *head;
+        free(temp);
+    }
+}
+
+
+// Delete from end
+void deleteEnd(struct Node** head) {
+    struct Node *temp;
+
+    if(*head == NULL) return;
+
+    if((*head)->next == *head) {
+        free(*head);
+        *head = NULL;
+    } else {
+        temp = *head;
+
+        while(temp->next->next != *head)
+            temp = temp->next;
+
+        free(temp->next);
+        temp->next = *head;
+    }
+}
+
+// Display and count
+void display(struct Node* head) {
+    if(head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    struct Node* temp = head;
+    int count = 0;
+
+    printf("Circular List: ");
+    do {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+        count++;
+    } while(temp != head);
+
+    printf("(Back to Head)\n");
+    printf("Total nodes = %d\n", count);
+}
+
+int main() {
+    struct Node* head = NULL;
+    int n, choice, value;
+
+
+
+
+    printf("Enter number of nodes to create circular list: ");
+    scanf("%d", &n);
+
+    createList(&head, n);
+
+    printf("\nChoose Operation:\n");
+    printf("1. Insert at Beginning\n");
+    printf("2. Insert at End\n");
+  
+
+    printf("3. Delete from Beginning\n");
+    printf("4. Delete from End\n");
+    printf("Enter choice: ");
+    scanf("%d", &choice);
+
+    switch(choice) {
+        case 1:
+            printf("Enter value: ");
+            scanf("%d", &value);
+            insertBeginning(&head, value);
+            break;
+
+        case 2:
+            printf("Enter value: ");
+            scanf("%d", &value);
+            insertEnd(&head, value);
+            break;
+
+        case 3:
+            deleteBeginning(&head);
+            break;
+
+        case 4:
+            deleteEnd(&head);
+            break;
+
+        default:
+            printf("Invalid choice.\n");
+    }
+
+    printf("\nUpdated Circular Linked List:\n");
+    display(head);
+
+    printf("\nProgram finished.\n");
+
+    return 0;
+}
+
+
+
+
+
+/*7.	Write a C program to implement a Doubly Linked List. The program should perform all basic operations on the list. The program must support the following operations:
+•	Creation of a Doubly Linked List, display and counting the number of nodes
+•	Insertion of a node (At the beginning, At the end, After a given node)
+•	Deletion of a node (From the beginning, From the end, of a given node)
+•	Traversal of the list (Forward traversal and Backward traversal) */
+
+//Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *prev;
+    struct Node *next;
+};
+
+// Create Doubly Linked List
+void createList(struct Node **head, int n) {
+    struct Node *newNode, *temp;
+    int value;
+
+    for(int i = 0; i < n; i++) {
+        printf("Enter value: ");
+        scanf("%d", &value);
+
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = value;
+        newNode->prev = NULL;
+        newNode->next = NULL;
+
+        if(*head == NULL) {
+            *head = newNode;
+        } else {
+            temp = *head;
+            while(temp->next != NULL)
+                temp = temp->next;
+
+            temp->next = newNode;
+            newNode->prev = temp;
+        }
+    }
+}
+
+// Display and count
+void display(struct Node *head) {
+    struct Node *temp = head;
+    int count = 0;
+
+ 
+
+
+
+   if(head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    printf("Forward: ");
+    while(temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->next;
+        count++;
+    }
+    printf("NULL\n");
+    printf("Total nodes = %d\n", count);
+}
+
+// Forward Traversal
+void forwardTraversal(struct Node *head) {
+    printf("Forward Traversal: ");
+    while(head != NULL) {
+        printf("%d <-> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+// Backward Traversal
+void backwardTraversal(struct Node *head) {
+    if(head == NULL) return;
+
+    struct Node *temp = head;
+
+    while(temp->next != NULL)
+        temp = temp->next;
+
+    printf("Backward Traversal: ");
+    while(temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->prev;
+    }
+    printf("NULL\n");
+}
+
+// Insert at Beginning
+void insertBeginning(struct Node **head, int value) {
+    struct Node *newNode;
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->prev = NULL;
+    newNode->next = *head;
+
+
+
+
+    if(*head != NULL)
+        (*head)->prev = newNode;
+
+    *head = newNode;
+
+    printf("Inserted at beginning.\n");
+}
+
+// Insert at End
+void insertEnd(struct Node **head, int value) {
+    struct Node *newNode, *temp;
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if(*head == NULL) {
+        newNode->prev = NULL;
+        *head = newNode;
+    } else {
+        temp = *head;
+        while(temp->next != NULL)
+            temp = temp->next;
+
+        temp->next = newNode;
+        newNode->prev = temp;
+    }
+
+    printf("Inserted at end.\n");
+}
+
+// Insert After Given Node
+void insertAfter(struct Node *head, int key, int value) {
+    struct Node *temp = head;
+
+    while(temp != NULL && temp->data != key)
+        temp = temp->next;
+
+    if(temp == NULL) {
+        printf("Node not found.\n");
+        return;
+    }
+
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+    newNode->next = temp->next;
+    newNode->prev = temp;
+
+    if(temp->next != NULL)
+        temp->next->prev = newNode;
+
+
+
+    temp->next = newNode;
+
+    printf("Inserted after given node.\n");
+}
+
+// Delete from Beginning
+void deleteBeginning(struct Node **head) {
+    if(*head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    struct Node *temp = *head;
+    *head = temp->next;
+
+    if(*head != NULL)
+        (*head)->prev = NULL;
+
+    free(temp);
+    printf("Deleted from beginning.\n");
+}
+
+// Delete from End
+void deleteEnd(struct Node **head) {
+    if(*head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    struct Node *temp = *head;
+
+    while(temp->next != NULL)
+        temp = temp->next;
+
+    if(temp->prev != NULL)
+        temp->prev->next = NULL;
+    else
+        *head = NULL;
+
+    free(temp);
+    printf("Deleted from end.\n");
+}
+
+// Delete Given Node
+void deleteValue(struct Node **head, int key) {
+    struct Node *temp = *head;
+
+    while(temp != NULL && temp->data != key)
+        temp = temp->next;
+
+
+
+
+
+    if(temp == NULL) {
+        printf("Node not found.\n");
+        return;
+    }
+
+    if(temp->prev != NULL)
+        temp->prev->next = temp->next;
+    else
+        *head = temp->next;
+
+    if(temp->next != NULL)
+        temp->next->prev = temp->prev;
+
+    free(temp);
+    printf("Given node deleted.\n");
+}
+
+int main() {
+    struct Node *head = NULL;
+    int n, choice, value, key;
+
+    printf("Enter number of nodes to create list: ");
+    scanf("%d", &n);
+
+    createList(&head, n);
+
+    do {
+        printf("\n--- MENU ---\n");
+        printf("1. Display and Count\n");
+        printf("2. Insert at Beginning\n");
+        printf("3. Insert at End\n");
+        printf("4. Insert After Node\n");
+        printf("5. Delete from Beginning\n");
+        printf("6. Delete from End\n");
+        printf("7. Delete Given Node\n");
+        printf("8. Forward Traversal\n");
+        printf("9. Backward Traversal\n");
+        printf("10. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                display(head);
+                break;
+            case 2:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                insertBeginning(&head, value);
+                break;
+     
+
+
+
+            case 3:
+                printf("Enter value: ");
+                scanf("%d", &value);
+                insertEnd(&head, value);
+                break;
+            case 4:
+                printf("Enter existing node value: ");
+                scanf("%d", &key);
+                printf("Enter new value: ");
+                scanf("%d", &value);
+                insertAfter(head, key, value);
+                break;
+            case 5:
+                deleteBeginning(&head);
+                break;
+            case 6:
+                deleteEnd(&head);
+                break;
+            case 7:
+                printf("Enter value to delete: ");
+                scanf("%d", &key);
+                deleteValue(&head, key);
+                break;
+            case 8:
+                forwardTraversal(head);
+                break;
+            case 9:
+                backwardTraversal(head);
+                break;
+            case 10:
+                printf("Program Ended.\n");
+                break;
+            default:
+                printf("Invalid choice.\n");
+        }
+
+    } while(choice != 10);
+
+    return 0;
+}
+
+
+
+
+
+/*8.	Write a C program to implement a Doubly Circular Linked List. The program should perform all basic operations on the list. The program must support the 
+following operations:
+•	Creation of a Doubly Circular Linked List, display and counting the number of nodes
+•	Insertion of a node (At the beginning, At the end)
+•	Deletion of a node (From the beginning, From the end)*/
+
+//Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *prev;
+    struct Node *next;
+};
+
+// Create Doubly Circular Linked List
+void createList(struct Node **head, int n) {
+    struct Node *newNode, *last;
+    int value;
+
+    for(int i = 0; i < n; i++) {
+        printf("Enter value: ");
+        scanf("%d", &value);
+
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = value;
+
+        if(*head == NULL) {
+            newNode->next = newNode;
+            newNode->prev = newNode;
+            *head = newNode;
+        } else {
+            last = (*head)->prev;
+
+            newNode->next = *head;
+            newNode->prev = last;
+            last->next = newNode;
+            (*head)->prev = newNode;
+        }
+    }
+}
+
+// Display and Count
+void display(struct Node *head) {
+    if(head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+
+
+    struct Node *temp = head;
+    int count = 0;
+
+    printf("\nForward Traversal: ");
+    do {
+        printf("%d <-> ", temp->data);
+        temp = temp->next;
+        count++;
+    } while(temp != head);
+    printf("(Head)\n");
+
+    printf("Backward Traversal: ");
+    temp = head->prev;
+    do {
+        printf("%d <-> ", temp->data);
+        temp = temp->prev;
+    } while(temp != head->prev);
+    printf("(Head)\n");
+
+    printf("Total nodes = %d\n", count);
+}
+
+// Insert at Beginning
+void insertBeginning(struct Node **head, int value) {
+    struct Node *newNode, *last;
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+    if(*head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        *head = newNode;
+    } else {
+        last = (*head)->prev;
+
+        newNode->next = *head;
+        newNode->prev = last;
+        last->next = newNode;
+        (*head)->prev = newNode;
+
+        *head = newNode;
+    }
+}
+
+// Insert at End
+void insertEnd(struct Node **head, int value) {
+    struct Node *newNode, *last;
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+
+
+
+    if(*head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        *head = newNode;
+    } else {
+        last = (*head)->prev;
+
+        newNode->next = *head;
+        newNode->prev = last;
+        last->next = newNode;
+        (*head)->prev = newNode;
+    }
+}
+
+// Delete from Beginning
+void deleteBeginning(struct Node **head) {
+    struct Node *last, *temp;
+
+    if(*head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    if((*head)->next == *head) {
+        free(*head);
+        *head = NULL;
+    } else {
+        last = (*head)->prev;
+        temp = *head;
+
+        *head = temp->next;
+        last->next = *head;
+        (*head)->prev = last;
+
+        free(temp);
+    }
+}
+
+// Delete from End
+void deleteEnd(struct Node **head) {
+    struct Node *last;
+
+    if(*head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    if((*head)->next == *head) {
+        free(*head);
+        *head = NULL;
+    } else {
+        last = (*head)->prev;
+
+
+        last->prev->next = *head;
+        (*head)->prev = last->prev;
+
+        free(last);
+    }
+}
+
+int main() {
+    struct Node *head = NULL;
+    int n, choice, value;
+
+    printf("Enter number of nodes to create doubly circular list: ");
+    scanf("%d", &n);
+
+    createList(&head, n);
+
+    printf("\nChoose ONE operation:\n");
+    printf("1. Insert at Beginning\n");
+    printf("2. Insert at End\n");
+    printf("3. Delete from Beginning\n");
+    printf("4. Delete from End\n");
+    printf("Enter choice: ");
+    scanf("%d", &choice);
+
+    switch(choice) {
+        case 1:
+            printf("Enter value: ");
+            scanf("%d", &value);
+            insertBeginning(&head, value);
+            break;
+
+        case 2:
+            printf("Enter value: ");
+            scanf("%d", &value);
+            insertEnd(&head, value);
+            break;
+
+        case 3:
+            deleteBeginning(&head);
+            break;
+
+        case 4:
+            deleteEnd(&head);
+            break;
+
+        default:
+            printf("Invalid choice.\n");
+    }
+
+    printf("\nUpdated Doubly Circular Linked List:\n");
+    display(head);
+
+
+
+    printf("\nProgram Finished.\n");
+
+    return 0;
+}
+
+
+
+
+
+/*9.	Write a C program to represent and evaluate a Polynomial using a Linked List. Each node should represent a term containing coefficient and exponent.*/
+
+
+//Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+struct Node {
+    int coeff;
+    int exp;
+    struct Node* next;
+};
+
+// Insert term at end
+void insertTerm(struct Node** head, int c, int e) {
+    struct Node *newNode, *temp;
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->coeff = c;
+    newNode->exp = e;
+    newNode->next = NULL;
+
+    if(*head == NULL) {
+        *head = newNode;
+    } else {
+        temp = *head;
+        while(temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+}
+
+// Display polynomial
+void displayPolynomial(struct Node* head) {
+    struct Node* temp = head;
+
+    printf("Polynomial: ");
+    while(temp != NULL) {
+        printf("%dx^%d", temp->coeff, temp->exp);
+        if(temp->next != NULL)
+            printf(" + ");
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+// Evaluate polynomial
+double evaluate(struct Node* head, double x) {
+    double result = 0.0;
+
+
+    while(head != NULL) {
+        result += head->coeff * pow(x, head->exp);
+        head = head->next;
+    }
+
+    return result;
+}
+
+int main() {
+    struct Node* head = NULL;
+    int n, c, e;
+    double x, answer;
+
+    printf("Enter number of terms in polynomial: ");
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++) {
+        printf("Enter coefficient and exponent: ");
+        scanf("%d %d", &c, &e);
+        insertTerm(&head, c, e);
+    }
+
+    displayPolynomial(head);
+
+    printf("Enter value of x to evaluate: ");
+    scanf("%lf", &x);
+
+    answer = evaluate(head, x);
+
+    printf("Polynomial value at x = %.2lf is %.2lf\n", x, answer);
+
+    return 0;
+}
+
+
+
+
+
+/*10.	Write a C program to maintain Student Records using a Linked List. Each node should store student details such as roll number, name, and marks. Implement 
+operations to insert, delete, search, and display records.*/
+
+//Input:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Student {
+    int roll;
+    char name[50];
+    float marks;
+    struct Student* next;
+};
+
+// Create initial list
+void createList(struct Student **head, int n) {
+    struct Student *newNode, *temp;
+    
+    for(int i = 0; i < n; i++) {
+        newNode = (struct Student*)malloc(sizeof(struct Student));
+        
+        printf("Enter Roll Number: ");
+        scanf("%d", &newNode->roll);
+        
+        printf("Enter Name: ");
+        scanf("%s", newNode->name);
+        
+        printf("Enter Marks: ");
+        scanf("%f", &newNode->marks);
+        
+        newNode->next = NULL;
+
+        if(*head == NULL)
+            *head = newNode;
+        else {
+            temp = *head;
+            while(temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+    }
+}
+
+// Insert new record at end
+void insertRecord(struct Student **head) {
+    struct Student *newNode, *temp;
+
+    newNode = (struct Student*)malloc(sizeof(struct Student));
+
+
+
+    printf("Enter Roll Number: ");
+    scanf("%d", &newNode->roll);
+    
+    printf("Enter Name: ");
+    scanf("%s", newNode->name);
+    
+    printf("Enter Marks: ");
+    scanf("%f", &newNode->marks);
+
+    newNode->next = NULL;
+
+    if(*head == NULL)
+        *head = newNode;
+    else {
+        temp = *head;
+        while(temp->next != NULL)
+            temp = temp->next;
+        temp->next = newNode;
+    }
+
+    printf("Student record inserted successfully.\n");
+}
+
+// Delete by roll number
+void deleteRecord(struct Student **head, int roll) {
+    struct Student *temp = *head, *prev = NULL;
+
+    while(temp != NULL && temp->roll != roll) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if(temp == NULL) {
+        printf("Record not found.\n");
+        return;
+    }
+
+    if(prev == NULL)
+        *head = temp->next;
+    else
+        prev->next = temp->next;
+
+    free(temp);
+    printf("Record deleted successfully.\n");
+}
+
+// Search by roll number
+void searchRecord(struct Student *head, int roll) {
+    while(head != NULL) {
+        if(head->roll == roll) {
+            printf("Record Found:\n");
+            printf("Roll: %d\n", head->roll);
+
+
+            printf("Name: %s\n", head->name);
+            printf("Marks: %.2f\n", head->marks);
+            return;
+        }
+        head = head->next;
+    }
+
+    printf("Record not found.\n");
+}
+
+// Display all records
+void displayRecords(struct Student *head) {
+    if(head == NULL) {
+        printf("No records available.\n");
+        return;
+    }
+
+    printf("\nStudent Records:\n");
+    while(head != NULL) {
+        printf("Roll: %d | Name: %s | Marks: %.2f\n",
+               head->roll, head->name, head->marks);
+        head = head->next;
+    }
+}
+
+int main() {
+    struct Student *head = NULL;
+    int n, choice, roll;
+
+    printf("Enter number of students to create: ");
+    scanf("%d", &n);
+
+    createList(&head, n);
+
+    printf("\nChoose ONE operation:\n");
+    printf("1. Insert Record\n");
+    printf("2. Delete Record\n");
+    printf("3. Search Record\n");
+    printf("4. Display Records\n");
+    printf("Enter choice: ");
+    scanf("%d", &choice);
+
+    switch(choice) {
+
+        case 1:
+            insertRecord(&head);
+            displayRecords(head);
+            break;
+
+        case 2:
+            printf("Enter roll number to delete: ");
+            scanf("%d", &roll);
+
+
+            deleteRecord(&head, roll);
+            displayRecords(head);
+            break;
+
+        case 3:
+            printf("Enter roll number to search: ");
+            scanf("%d", &roll);
+            searchRecord(head, roll);
+            break;
+
+        case 4:
+            displayRecords(head);
+            break;
+
+        default:
+            printf("Invalid choice.\n");
+    }
+
+    printf("\nProgram Finished.\n");
+
+    return 0;
+}
