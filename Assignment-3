@@ -1,0 +1,463 @@
+/*1.	Write a C program to implement a Stack data structure using an array. The program should be modular and use separate
+functions for each operation.
+(i)	Insert (Push): Add an element to the top of the stack.
+(ii)	Delete (Pop): Remove an element from the top of the stack.
+(iii)	Display: Display all elements of the stack from top to bottom.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int *stack;
+int top = -1;
+int MAX;
+
+// Push function
+void push() {
+    int value;
+
+    if (top == MAX - 1) {
+        printf("Stack Overflow!\n");
+    } else {
+        printf("Enter value: ");
+        scanf("%d", &value);
+        stack[++top] = value;
+        printf("Inserted successfully.\n");
+    }
+}
+
+// Pop function
+void pop() {
+    if (top == -1) {
+        printf("Stack Underflow!\n");
+    } else {
+        printf("Deleted element: %d\n", stack[top--]);
+    }
+}
+
+// Display function
+void display() {
+    if (top == -1) {
+        printf("Stack is empty.\n");
+    } else {
+        printf("Stack (top to bottom):\n");
+        for (int i = top; i >= 0; i--) {
+            printf("%d\n", stack[i]);
+        }
+    }
+}
+
+int main() {
+    int choice;
+
+    printf("Enter size of stack: ");
+    scanf("%d", &MAX);
+
+    stack = (int *)malloc(MAX * sizeof(int));
+
+    if (stack == NULL) {
+        printf("Memory allocation failed!\n");
+        return 0;
+    }
+
+    while (1) {
+        printf("\n1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: push(); break;
+            case 2: pop(); break;
+            case 3: display(); break;
+            case 4: free(stack); return 0;
+            default: printf("Invalid choice!\n");
+        }
+    }
+}
+
+
+
+
+/*2.	Write a C program to implement a Stack using a Linked List. The program should support the following operations using 
+separate functions:
+(i)	Push (Insert): Insert an element into the stack.
+(ii)	Pop (Delete): Remove an element from the stack.
+(iii)	Display: Display all elements of the stack.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define structure of node
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *top = NULL;  // Top of stack
+
+// Push operation
+void push() {
+    int value;
+    struct node *newNode;
+
+    newNode = (struct node *)malloc(sizeof(struct node));
+
+    if (newNode == NULL) {
+        printf("Stack Overflow!\n");
+        return;
+    }
+
+    printf("Enter value: ");
+    scanf("%d", &value);
+
+    newNode->data = value;
+    newNode->next = top;
+    top = newNode;
+
+    printf("Inserted successfully.\n");
+}
+
+// Pop operation
+void pop() {
+    struct node *temp;
+
+    if (top == NULL) {
+        printf("Stack Underflow!\n");
+    } else {
+        temp = top;
+        printf("Deleted element: %d\n", top->data);
+        top = top->next;
+        free(temp);
+    }
+}
+
+// Display operation
+void display() {
+    struct node *temp;
+
+    if (top == NULL) {
+        printf("Stack is empty.\n");
+    } else {
+        printf("Stack elements (top to bottom):\n");
+        temp = top;
+        while (temp != NULL) {
+            printf("%d\n", temp->data);
+            temp = temp->next;
+        }
+    }
+}
+
+// Main function
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: push(); break;
+            case 2: pop(); break;
+            case 3: display(); break;
+            case 4: return 0;
+            default: printf("Invalid choice!\n");
+        }
+    }
+}
+
+
+
+
+/*3.	Write a C program to reverse a given string using a stack. The program should follow the Last In First Out (LIFO)
+principle of the stack.*/
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+// Push function
+void push(char ch) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow!\n");
+    } else {
+        stack[++top] = ch;
+    }
+}
+
+// Pop function
+char pop() {
+    if (top == -1) {
+        return '\0';
+    } else {
+        return stack[top--];
+    }
+}
+
+int main() {
+    char str[100];
+    int i;
+
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+
+    // Remove newline character from fgets
+    str[strcspn(str, "\n")] = '\0';
+
+    // Push all characters into stack
+    for (i = 0; i < strlen(str); i++) {
+        push(str[i]);
+    }
+
+    // Pop characters to reverse string
+    for (i = 0; i < strlen(str); i++) {
+        str[i] = pop();
+    }
+
+    printf("Reversed string: %s\n", str);
+
+    return 0;
+}
+
+
+
+
+
+
+
+/*4.	Write a program to check whether a given expression is balanced or not using a stack implemented with an array.*/
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+// Push function
+void push(char ch) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow!\n");
+    } else {
+        stack[++top] = ch;
+    }
+}
+
+// Pop function
+char pop() {
+    if (top == -1) {
+        return '\0';
+    } else {
+        return stack[top--];
+    }
+}
+
+// Function to check matching pair
+int isMatchingPair(char open, char close) {
+    if (open == '(' && close == ')') return 1;
+    if (open == '{' && close == '}') return 1;
+    if (open == '[' && close == ']') return 1;
+    return 0;
+}
+
+// Function to check balance
+int isBalanced(char expr[]) {
+    for (int i = 0; i < strlen(expr); i++) {
+        char ch = expr[i];
+
+        // If opening bracket → push
+        if (ch == '(' || ch == '{' || ch == '[') {
+            push(ch);
+        }
+        // If closing bracket → check
+        else if (ch == ')' || ch == '}' || ch == ']') {
+            if (top == -1) return 0; // no matching opening
+
+            char popped = pop();
+            if (!isMatchingPair(popped, ch)) return 0;
+        }
+    }
+
+    // If stack is empty → balanced
+    return (top == -1);
+}
+
+int main() {
+    char expr[100];
+
+    printf("Enter expression: ");
+    fgets(expr, sizeof(expr), stdin);
+
+    // Remove newline
+    expr[strcspn(expr, "\n")] = '\0';
+
+    if (isBalanced(expr))
+        printf("Expression is Balanced.\n");
+    else
+        printf("Expression is NOT Balanced.\n");
+
+    return 0;
+}
+
+
+
+
+
+/*5.	Write a C program to convert a given infix expression (A+B*(C^D-E)^(F+G*H)-I) into its corresponding postfix expression 
+(ABCD^E-FGH*+^*+I-) using a stack implemented with arrays.*/
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+// Push
+void push(char x) {
+    stack[++top] = x;
+}
+
+// Pop
+char pop() {
+    if (top == -1)
+        return -1;
+    else
+        return stack[top--];
+}
+
+// Priority function
+int priority(char x) {
+    if (x == '^')
+        return 3;
+    else if (x == '*' || x == '/')
+        return 2;
+    else if (x == '+' || x == '-')
+        return 1;
+    else
+        return 0;
+}
+
+int main() {
+    char infix[100], postfix[100];
+    int i, j = 0;
+
+    printf("Enter infix expression: ");
+    fgets(infix, sizeof(infix), stdin);
+
+    // Remove newline
+    infix[strcspn(infix, "\n")] = '\0';
+
+    for (i = 0; i < strlen(infix); i++) {
+
+        // If operand → add to postfix
+        if (isalnum(infix[i])) {
+            postfix[j++] = infix[i];
+        }
+
+        // If opening bracket → push
+        else if (infix[i] == '(') {
+            push(infix[i]);
+        }
+
+        // If closing bracket → pop until '('
+        else if (infix[i] == ')') {
+            while (stack[top] != '(') {
+                postfix[j++] = pop();
+            }
+            pop(); // remove '('
+        }
+
+        // Operator
+        else {
+            while (top != -1 && priority(stack[top]) >= priority(infix[i])) {
+                postfix[j++] = pop();
+            }
+            push(infix[i]);
+        }
+    }
+
+    // Pop remaining operators
+    while (top != -1) {
+        postfix[j++] = pop();
+    }
+
+    postfix[j] = '\0';
+
+    printf("Postfix expression: %s\n", postfix);
+
+    return 0;
+}
+
+
+
+
+/*6.	Write a C program to evaluate a postfix expression using a stack implemented with an array. 
+(i)	Postfix Expression: 23*54*+9-
+(ii)	Result = 17
+*/
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX 100
+
+int stack[MAX];
+int top = -1;
+
+// Push
+void push(int x) {
+    stack[++top] = x;
+}
+
+// Pop
+int pop() {
+    return stack[top--];
+}
+
+int main() {
+    char postfix[100];
+    int i, a, b, result;
+
+    printf("Enter postfix expression: ");
+    fgets(postfix, sizeof(postfix), stdin);
+
+    // Remove newline
+    postfix[strcspn(postfix, "\n")] = '\0';
+
+    for (i = 0; i < strlen(postfix); i++) {
+
+        // If operand → push
+        if (isdigit(postfix[i])) {
+            push(postfix[i] - '0');  // convert char to int
+        }
+
+        // If operator → perform operation
+        else {
+            b = pop();
+            a = pop();
+
+            switch (postfix[i]) {
+                case '+': push(a + b); break;
+                case '-': push(a - b); break;
+                case '*': push(a * b); break;
+                case '/': push(a / b); break;
+            }
+        }
+    }
+
+    result = pop();
+
+    printf("Result = %d\n", result);
+
+    return 0;
+}
