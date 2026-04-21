@@ -1,0 +1,448 @@
+/*1. Write a C program to implement a hash function on student SAP-ID and categorize them in to their 10 families based on the last 
+three digits. Example: Student with SAP-ID 5000423 belongs to family 9 and student with SAP-ID 5000425 belongs to family 2 based on 
+last three digits.*/
+
+#include <stdio.h>
+
+int main() {
+    long long sap_id;
+    int last3digits, family;
+
+    // Input SAP ID
+    printf("Enter SAP ID: ");
+    scanf("%lld", &sap_id);
+
+    // Extract last 3 digits
+    last3digits = sap_id % 1000;
+
+    // Hash function to find family
+    family = last3digits % 10;
+
+    // Output result
+    printf("Last 3 digits: %d\n", last3digits);
+    printf("Student belongs to Family: %d\n", family);
+
+    return 0;
+}
+
+
+
+
+
+/*2. Write a C program to implement a Hash table using arrays. Perform Insert, Delete and Search operations on the hash table
+using the above Hash function (S.No.1). Adopt a suitable user-defined exception handling strategy if collision occurs while
+inserting data.*/
+
+#include <stdio.h>
+
+#define SIZE 10
+
+int hashTable[SIZE];
+
+// Function to initialize hash table
+void init() {
+    for(int i = 0; i < SIZE; i++) {
+        hashTable[i] = -1; // -1 means empty
+    }
+}
+
+// Hash function
+int hashFunction(int key) {
+    int last3 = key % 1000;
+    return last3 % 10;
+}
+
+// Insert function
+void insert(int key) {
+    int index = hashFunction(key);
+    int startIndex = index;
+
+    while(hashTable[index] != -1) {
+        if(hashTable[index] == key) {
+            printf("⚠️ Duplicate entry! Cannot insert %d\n", key);
+            return;
+        }
+
+        index = (index + 1) % SIZE;
+
+        // Table full condition (exception handling)
+        if(index == startIndex) {
+            printf("❌ Hash Table is FULL! Cannot insert %d\n", key);
+            return;
+        }
+    }
+
+    hashTable[index] = key;
+    printf("✅ Inserted %d at index %d\n", key, index);
+}
+
+// Search function
+void search(int key) {
+    int index = hashFunction(key);
+    int startIndex = index;
+
+    while(hashTable[index] != -1) {
+        if(hashTable[index] == key) {
+            printf("🔍 Found %d at index %d\n", key, index);
+            return;
+        }
+
+        index = (index + 1) % SIZE;
+
+        if(index == startIndex)
+            break;
+    }
+
+    printf("❌ %d not found in hash table\n", key);
+}
+
+// Delete function
+void deleteKey(int key) {
+    int index = hashFunction(key);
+    int startIndex = index;
+
+    while(hashTable[index] != -1) {
+        if(hashTable[index] == key) {
+            hashTable[index] = -2; // mark as deleted
+            printf("🗑️ Deleted %d from index %d\n", key, index);
+            return;
+        }
+
+        index = (index + 1) % SIZE;
+
+        if(index == startIndex)
+            break;
+    }
+
+    printf("❌ %d not found, cannot delete\n", key);
+}
+
+// Display function
+void display() {
+    printf("\n📊 Hash Table:\n");
+    for(int i = 0; i < SIZE; i++) {
+        if(hashTable[i] == -1)
+            printf("[%d] -> EMPTY\n", i);
+        else if(hashTable[i] == -2)
+            printf("[%d] -> DELETED\n", i);
+        else
+            printf("[%d] -> %d\n", i, hashTable[i]);
+    }
+}
+
+// Main function
+int main() {
+    int choice, key;
+    init();
+
+    while(1) {
+        printf("\n--- HASH TABLE MENU ---\n");
+        printf("1. Insert\n2. Delete\n3. Search\n4. Display\n5. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                printf("Enter SAP ID: ");
+                scanf("%d", &key);
+                insert(key);
+                break;
+
+            case 2:
+                printf("Enter SAP ID to delete: ");
+                scanf("%d", &key);
+                deleteKey(key);
+                break;
+
+            case 3:
+                printf("Enter SAP ID to search: ");
+                scanf("%d", &key);
+                search(key);
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 5:
+                return 0;
+
+            default:
+                printf("⚠️ Invalid choice!\n");
+        }
+    }
+}
+
+
+
+
+
+/*3. Write a C program to accept the number of vertices and edges of a graph and represent it using an adjacency matrix. 
+The program should: (i) construct and display the adjacency matrix. (ii) Implement functions to calculate and print the in-degree
+and out-degree of a given vertex.*/
+
+#include <stdio.h>
+
+#define MAX 10
+
+int adj[MAX][MAX];  // Adjacency Matrix
+
+// Function to initialize matrix
+void init(int n) {
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            adj[i][j] = 0;
+        }
+    }
+}
+
+// Function to display adjacency matrix
+void display(int n) {
+    printf("\nAdjacency Matrix:\n");
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            printf("%d ", adj[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Function to calculate in-degree
+int indegree(int v, int n) {
+    int count = 0;
+    for(int i = 0; i < n; i++) {
+        if(adj[i][v] == 1)
+            count++;
+    }
+    return count;
+}
+
+// Function to calculate out-degree
+int outdegree(int v, int n) {
+    int count = 0;
+    for(int j = 0; j < n; j++) {
+        if(adj[v][j] == 1)
+            count++;
+    }
+    return count;
+}
+
+int main() {
+    int n, e, u, v, vertex;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    init(n);
+
+    printf("Enter number of edges: ");
+    scanf("%d", &e);
+
+    printf("Enter edges (u v) [0-based indexing]:\n");
+    for(int i = 0; i < e; i++) {
+        scanf("%d %d", &u, &v);
+        adj[u][v] = 1;   // Directed graph
+    }
+
+    display(n);
+
+    printf("\nEnter vertex to find degree: ");
+    scanf("%d", &vertex);
+
+    printf("In-degree of vertex %d = %d\n", vertex, indegree(vertex, n));
+    printf("Out-degree of vertex %d = %d\n", vertex, outdegree(vertex, n));
+
+    return 0;
+}
+
+
+
+
+
+/*4.	Write a C program to accept a graph in the form of an adjacency matrix and determine whether the graph is undirected 
+or not.*/
+
+#include <stdio.h>
+
+#define MAX 10
+
+int main() {
+    int adj[MAX][MAX];
+    int n, isUndirected = 1;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter adjacency matrix:\n");
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            scanf("%d", &adj[i][j]);
+        }
+    }
+
+    // Check symmetry
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            if(adj[i][j] != adj[j][i]) {
+                isUndirected = 0;
+                break;
+            }
+        }
+        if(isUndirected == 0)
+            break;
+    }
+
+    if(isUndirected)
+        printf("✅ The graph is UNDIRECTED\n");
+    else
+        printf("❌ The graph is DIRECTED\n");
+
+    return 0;
+}
+
+
+
+
+
+/*5. Write a C program to represent a graph using an adjacency matrix. The program should perform Breadth First Search (BFS) 
+traversal starting from a given source vertex. The program should: 
+(i) Accept the number of vertices n. 
+(ii) Accept the adjacency matrix of the graph.
+(iii) Accept a starting vertex for traversal. 
+(iv) Perform BFS traversal using a queue. 
+(v) Display the order of traversal of vertices
+*/
+
+#include <stdio.h>
+
+#define MAX 10
+
+int adj[MAX][MAX];
+int visited[MAX];
+int queue[MAX];
+int front = -1, rear = -1;
+
+// Queue operations
+void enqueue(int v) {
+    if(rear == MAX - 1)
+        return;
+    if(front == -1)
+        front = 0;
+    queue[++rear] = v;
+}
+
+int dequeue() {
+    if(front == -1)
+        return -1;
+    int item = queue[front];
+    if(front == rear)
+        front = rear = -1;
+    else
+        front++;
+    return item;
+}
+
+// BFS function
+void BFS(int start, int n) {
+    enqueue(start);
+    visited[start] = 1;
+
+    printf("\nBFS Traversal: ");
+
+    while(front != -1) {
+        int v = dequeue();
+        printf("%d ", v);
+
+        for(int i = 0; i < n; i++) {
+            if(adj[v][i] == 1 && visited[i] == 0) {
+                enqueue(i);
+                visited[i] = 1;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, start;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter adjacency matrix:\n");
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            scanf("%d", &adj[i][j]);
+        }
+    }
+
+    // Initialize visited array
+    for(int i = 0; i < n; i++) {
+        visited[i] = 0;
+    }
+
+    printf("Enter starting vertex: ");
+    scanf("%d", &start);
+
+    BFS(start, n);
+
+    return 0;
+}
+
+
+
+
+
+/*6. Write a C program to represent a graph using an adjacency matrix. The program should perform Depth First Search (DFS)
+traversal starting from a given source vertex. The program should:
+(i) Accept the number of vertices n.
+(ii) Accept the adjacency matrix of the graph.
+(iii) Accept a starting vertex for traversal.
+(iv) Perform DFS traversal using recursion or stack.
+(v) Display the order of traversal of vertices.
+*/
+
+#include <stdio.h>
+
+#define MAX 10
+
+int adj[MAX][MAX];
+int visited[MAX];
+
+// DFS function
+void DFS(int v, int n) {
+    printf("%d ", v);
+    visited[v] = 1;
+
+    for(int i = 0; i < n; i++) {
+        if(adj[v][i] == 1 && visited[i] == 0) {
+            DFS(i, n);
+        }
+    }
+}
+
+int main() {
+    int n, start;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter adjacency matrix:\n");
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
+            scanf("%d", &adj[i][j]);
+        }
+    }
+
+    // Initialize visited array
+    for(int i = 0; i < n; i++) {
+        visited[i] = 0;
+    }
+
+    printf("Enter starting vertex: ");
+    scanf("%d", &start);
+
+    printf("\nDFS Traversal: ");
+    DFS(start, n);
+
+    return 0;
+}
