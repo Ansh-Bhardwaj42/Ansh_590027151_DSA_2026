@@ -1,0 +1,477 @@
+/*1. Write a C program to implement the Bubble Sort algorithm. (i) Input: An array of n integers.
+(ii) Output: Sorted array in ascending order. 
+(iii) Requirements: • Display the array after each pass. • Count and display the total number of comparisons and swaps.*/
+
+#include <stdio.h>
+
+// Function to print array
+void printArray(int arr[], int n) {
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    // Input array
+    printf("Enter %d integers:\n", n);
+    for(int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    int comparisons = 0;
+    int swaps = 0;
+
+    // Bubble Sort
+    for(int i = 0; i < n - 1; i++) {
+        int swapped = 0;
+
+        for(int j = 0; j < n - i - 1; j++) {
+            comparisons++;
+
+            if(arr[j] > arr[j + 1]) {
+                // Swap
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+
+                swaps++;
+                swapped = 1;
+            }
+        }
+
+        // Display after each pass
+        printf("\nAfter Pass %d: ", i + 1);
+        printArray(arr, n);
+
+        // Optimization: stop if already sorted
+        if(swapped == 0) break;
+    }
+
+    // Final Output
+    printf("\nSorted Array: ");
+    printArray(arr, n);
+
+    printf("\nTotal Comparisons = %d\n", comparisons);
+    printf("Total Swaps = %d\n", swaps);
+
+    return 0;
+}
+
+
+
+
+
+
+
+/*2. Write a C program to implement the Selection Sort algorithm. (i) Input: An array of n integers. 
+(ii) Output: Sorted array in ascending order.
+(iii) Requirements: • Display the array after each pass. • Count and display the total number of comparisons and swaps.*/
+
+#include <stdio.h>
+
+// Function to print array
+void printArray(int arr[], int n) {
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    // Input
+    printf("Enter %d integers:\n", n);
+    for(int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    int comparisons = 0;
+    int swaps = 0;
+
+    // Selection Sort
+    for(int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+
+        for(int j = i + 1; j < n; j++) {
+            comparisons++;
+
+            if(arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        // Swap only if needed
+        if(minIndex != i) {
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+            swaps++;
+        }
+
+        // Display after each pass
+        printf("\nAfter Pass %d: ", i + 1);
+        printArray(arr, n);
+    }
+
+    // Final Output
+    printf("\nSorted Array: ");
+    printArray(arr, n);
+
+    printf("\nTotal Comparisons = %d\n", comparisons);
+    printf("Total Swaps = %d\n", swaps);
+
+    return 0;
+}
+
+
+
+
+
+
+/*3. Write a C program to implement the Insertion Sort algorithm. (i) Input: An array of n integers. 
+(ii) Output: Sorted array in ascending order. 
+(iii) Requirements: • Display the array after inserting each element.*/
+
+#include <stdio.h>
+
+// Function to print array
+void printArray(int arr[], int n) {
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    // Input array
+    printf("Enter %d integers:\n", n);
+    for(int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    // Insertion Sort
+    for(int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        // Shift elements greater than key
+        while(j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        arr[j + 1] = key;
+
+        // Display after each insertion
+        printf("\nAfter inserting element %d: ", key);
+        printArray(arr, n);
+    }
+
+    // Final Output
+    printf("\nSorted Array: ");
+    printArray(arr, n);
+
+    return 0;
+}
+
+
+
+
+
+/*4. Write a C program to implement the Merge Sort using recursion. (i) Input: An array of n integers.
+(ii) Output: Sorted array in ascending order. 
+(iii) Requirements: • Clearly implement the divide and merge steps.*/
+
+#include <stdio.h>
+
+// -------- MERGE FUNCTION --------
+// Merges two sorted halves: arr[left..mid] and arr[mid+1..right]
+void merge(int arr[], int left, int mid, int right) {
+    int i = left;
+    int j = mid + 1;
+    int k = 0;
+
+    int temp[right - left + 1];
+
+    // Merge elements into temp[]
+    while(i <= mid && j <= right) {
+        if(arr[i] <= arr[j]) {
+            temp[k++] = arr[i++];
+        } else {
+            temp[k++] = arr[j++];
+        }
+    }
+
+    // Copy remaining elements (if any)
+    while(i <= mid) {
+        temp[k++] = arr[i++];
+    }
+
+    while(j <= right) {
+        temp[k++] = arr[j++];
+    }
+
+    // Copy back to original array
+    for(i = left, k = 0; i <= right; i++, k++) {
+        arr[i] = temp[k];
+    }
+}
+
+// -------- DIVIDE FUNCTION (RECURSION) --------
+void mergeSort(int arr[], int left, int right) {
+    if(left < right) {
+        int mid = (left + right) / 2;
+
+        // Divide
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        // Merge
+        merge(arr, left, mid, right);
+    }
+}
+
+// Function to print array
+void printArray(int arr[], int n) {
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// -------- MAIN FUNCTION --------
+int main() {
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Enter %d integers:\n", n);
+    for(int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    // Call merge sort
+    mergeSort(arr, 0, n - 1);
+
+    // Output sorted array
+    printf("\nSorted Array: ");
+    printArray(arr, n);
+
+    return 0;
+}
+
+
+
+
+
+/*5. Write a C program to implement the Quick Sort using recursion. (i) Input: An array of n integers. 
+(ii) Output: Sorted array in ascending order. 
+(iii) Requirements: • Use any partitioning scheme.*/
+
+#include <stdio.h>
+
+// -------- PARTITION FUNCTION (Lomuto Scheme) --------
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];   // choose last element as pivot
+    int i = low - 1;         // index of smaller element
+
+    for(int j = low; j < high; j++) {
+        if(arr[j] < pivot) {
+            i++;
+            // swap arr[i] and arr[j]
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    // place pivot in correct position
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1; // pivot index
+}
+
+// -------- QUICK SORT FUNCTION (RECURSION) --------
+void quickSort(int arr[], int low, int high) {
+    if(low < high) {
+        int pi = partition(arr, low, high);
+
+        // sort left and right subarrays
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+// Function to print array
+void printArray(int arr[], int n) {
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// -------- MAIN FUNCTION --------
+int main() {
+    int n;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Enter %d integers:\n", n);
+    for(int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    // Call quick sort
+    quickSort(arr, 0, n - 1);
+
+    // Output sorted array
+    printf("\nSorted Array: ");
+    printArray(arr, n);
+
+    return 0;
+}
+
+
+
+
+
+/*6.	Write a C program to perform Linear Search that finds all occurrences of a given element in an array.
+(i)	Input: array of size n and a key element.
+(ii)	Output: all positions where the element occurs.
+(iii)	 If the element does not exist, display an appropriate message.*/
+
+#include <stdio.h>
+
+int main() {
+    int n, key;
+
+    // Input size
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    // Input array
+    printf("Enter %d integers:\n", n);
+    for(int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    // Input key
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    int found = 0;
+
+    // Linear Search
+    printf("\nElement found at positions: ");
+    for(int i = 0; i < n; i++) {
+        if(arr[i] == key) {
+            printf("%d ", i + 1);  // 1-based index
+            found = 1;
+        }
+    }
+
+    // If not found
+    if(!found) {
+        printf("\nElement not found in the array.\n");
+    }
+
+    return 0;
+}
+
+
+
+
+/*7. Write a C program to implement Binary Search using recursion. (i) Input a sorted array and a key value.
+(ii) Use a recursive function to perform the search.
+(iii) Return and display the index of the element if found.*/
+
+#include <stdio.h>
+
+// Recursive Binary Search Function
+int binarySearch(int arr[], int left, int right, int key) {
+    if(left <= right) {
+        int mid = (left + right) / 2;
+
+        // If key is found
+        if(arr[mid] == key)
+            return mid;
+
+        // If key is smaller → search left half
+        else if(key < arr[mid])
+            return binarySearch(arr, left, mid - 1, key);
+
+        // If key is greater → search right half
+        else
+            return binarySearch(arr, mid + 1, right, key);
+    }
+
+    return -1; // Not found
+}
+
+int main() {
+    int n, key;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    // Input (must be sorted)
+    printf("Enter %d sorted integers (ascending order):\n", n);
+    for(int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    // Input key
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    // Call binary search
+    int result = binarySearch(arr, 0, n - 1, key);
+
+    // Output
+    if(result != -1)
+        printf("\nElement found at index: %d (position %d)\n", result, result + 1);
+    else
+        printf("\nElement not found in the array.\n");
+
+    return 0;
+}
